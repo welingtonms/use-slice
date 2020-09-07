@@ -1,6 +1,6 @@
 {
   "name": "@cheesebit/use-slice",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Provides a React hook similar to the Redux Toolkit createSlice.",
   "browser": "dist/use-slice.umd.js",
   "main": "dist/use-slice.cjs.js",
