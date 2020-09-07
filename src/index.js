@@ -6,8 +6,6 @@ function useSlice(name, initialState, reducers) {
   }
 
   function initializeActions() {
-    logger.debug('[useSlice] Initializeing actions for slice', name);
-
     let actions = {};
 
     for (let type in reducers) {
