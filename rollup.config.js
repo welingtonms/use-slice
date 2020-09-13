@@ -1,9 +1,10 @@
+import analyze from 'rollup-plugin-analyzer';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import pkg from './package.json';
+
 // import babel from 'rollup-plugin-babel';
 // import external from 'rollup-plugin-peer-deps-external';
-
 // import { terser } from 'rollup-plugin-terser';
 
 module.exports = [
@@ -17,6 +18,11 @@ module.exports = [
     plugins: [
       resolve(), // so Rollup can find `ms`
       commonjs(), // so Rollup can convert `ms` to an ES module
+      analyze({
+        hideDeps: true,
+        summaryOnly: true,
+        filter: module => /^\/src/.test(module.id),
+      }),
     ],
   },
   // CommonJS (for Node) and ES module (for bundlers) build.
