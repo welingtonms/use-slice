@@ -9,10 +9,10 @@ function useSlice(name, initialState, reducers) {
     let actions = {};
 
     for (let type in reducers) {
-      actions[type] = function createAction(payload) {
+      actions[type] = function createAction(...args) {
         return {
           type: getTypeName(type),
-          payload,
+          payload: [...args],
         };
       };
       actions[type].type = getTypeName(type);
