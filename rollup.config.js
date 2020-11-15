@@ -1,4 +1,5 @@
 import analyze from 'rollup-plugin-analyzer';
+import babel from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import pkg from './package.json';
@@ -16,6 +17,9 @@ module.exports = [
       format: 'umd',
     },
     plugins: [
+      babel({
+        exclude: 'node_modules/**', // only transpile our source code
+      }),
       resolve(), // so Rollup can find `ms`
       commonjs(), // so Rollup can convert `ms` to an ES module
       analyze({
@@ -24,6 +28,7 @@ module.exports = [
         filter: module => /^\/src/.test(module.id),
       }),
     ],
+    external: ['react'],
   },
   // CommonJS (for Node) and ES module (for bundlers) build.
   // (We could have three entries in the configuration array
@@ -33,10 +38,22 @@ module.exports = [
   // `file` and `format` for each target)
   {
     input: 'src/index.js',
-    external: ['react', 'react-dom'],
     output: [
       { file: pkg.main, format: 'cjs' },
       { file: pkg.module, format: 'es' },
     ],
+    plugins: [
+      babel({
+        exclude: 'node_modules/**', // only transpile our source code
+      }),
+      resolve(), // so Rollup can find `ms`
+      commonjs(), // so Rollup can convert `ms` to an ES module
+      analyze({
+        hideDeps: true,
+        summaryOnly: true,
+        filter: module => /^\/src/.test(module.id),
+      }),
+    ],
+    external: ['react'],
   },
 ];
