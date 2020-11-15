@@ -1,13 +1,10 @@
+import { terser } from 'rollup-plugin-terser';
 import analyze from 'rollup-plugin-analyzer';
 import babel from '@rollup/plugin-babel';
-import del from 'rollup-plugin-delete';
-import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import del from 'rollup-plugin-delete';
 import pkg from './package.json';
-
-// import babel from 'rollup-plugin-babel';
-// import external from 'rollup-plugin-peer-deps-external';
-// import { terser } from 'rollup-plugin-terser';
+import resolve from '@rollup/plugin-node-resolve';
 
 module.exports = [
   {
@@ -28,6 +25,7 @@ module.exports = [
       }),
       resolve(), // so Rollup can find `ms`
       commonjs(), // so Rollup can convert `ms` to an ES module
+      terser(),
       analyze({
         hideDeps: true,
         summaryOnly: true,

@@ -12,11 +12,17 @@ You can add this hook as a dependency by running `npm install @cheesebit/use-sli
 
 ## Props
 
-- **`name`** - Name of your slice. This is used to internally compose your actions' names (use this is case you want to dispatch your actions manually).
+### - `name`
 
-- **`initialState`** - Initial state for your slice.
+Name of your slice. This is used to internally compose your actions' names (use this is case you want to dispatch your actions manually).
 
-- **`reducers`** - Finally, here you provide your reducers. Here we expect an object with your reducer functions. Each reducer function receives as parameters (as any reducer would), the current `state` and the `action` object. Important to notice that we handle the payload to you as an `array`, containing the arguments provided when your action was called (so your action can use as many parameter as needed).
+### - `initialState`
+
+Initial state for your slice.
+
+### - `reducers`
+
+Finally, here you provide your reducers. Here we expect an object with your reducer functions. Each reducer function receives as parameters (as any reducer would), the current `state` and the `action` object. Important to notice that we handle the payload to you as an `array`, containing the arguments provided when your action was called (so your action can use as many parameter as needed).
 
 ## What you get
 
@@ -33,12 +39,12 @@ When you call `useSlice` we generate a wrapper around your reducers, generating 
 Check a more complete example [here](https://codesandbox.io/embed/relaxed-fast-h4lv4?fontsize=14&hidenavigation=1&theme=dark).
 
 ```jsx
-import React from "react";
-import { useSlice } from "@cheesebit/use-slice";
+import React from 'react';
+import { useSlice } from '@cheesebit/use-slice';
 
 function ToDoWithSlice() {
-  const [description, setDescription] = React.useState("");
-  const { state: toDos, actions, dispatch } = useSlice("todo", [], {
+  const [description, setDescription] = React.useState('');
+  const { state: toDos, actions, dispatch } = useSlice('todo', [], {
     addTodo(state, action) {
       const { payload } = action;
       const [newTodo] = payload;
@@ -53,11 +59,11 @@ function ToDoWithSlice() {
         ...state.slice(0, index),
         {
           ...state[index],
-          done: true
+          done: true,
         },
-        ...state.slice(index + 1)
+        ...state.slice(index + 1),
       ];
-    }
+    },
   });
 
   return (
@@ -72,7 +78,7 @@ function ToDoWithSlice() {
             value={description}
             onChange={function handler(e) {
               const {
-                target: { value }
+                target: { value },
               } = e;
 
               setDescription(value);
@@ -86,7 +92,7 @@ function ToDoWithSlice() {
             dispatch(
               actions.addTodo({
                 description,
-                done: false
+                done: false,
               })
             );
 
@@ -99,7 +105,7 @@ function ToDoWithSlice() {
             //   }]
             // })
 
-            setDescription("");
+            setDescription('');
           }}
         >
           Add
@@ -110,9 +116,7 @@ function ToDoWithSlice() {
           return (
             <li
               key={index}
-              className={`flex items-center border-b py-2 ${
-                toDo.done && "line-through"
-              }`}
+              className={`flex items-center border-b py-2 ${toDo.done && 'line-through'}`}
             >
               {toDo.description}
               <button
@@ -121,7 +125,7 @@ function ToDoWithSlice() {
                 className="bg-green-500 px-4 py-2 text-white ml-auto mr-0"
                 onClick={function addTodo() {
                   dispatch(actions.setDone(index));
-                  setDescription("");
+                  setDescription('');
                 }}
               >
                 Done

@@ -1,5 +1,11 @@
 import React from 'react';
 
+/**
+ * useSlice hook.
+ * @param {string} name - Slice name.
+ * @param {*} initialState - Initial value for this slice.
+ * @param {*} reducers - Object containing reducer functions to act upon this slice.
+ */
 function useSlice(name, initialState, reducers) {
   function getTypeName(type) {
     return `${name}/${type}`;
