@@ -136,105 +136,11 @@ function ToDoWithSlice() {
   );
 }
 
-function ToDoWithReducer() {
-  const [description, setDescription] = React.useState("");
-  const [toDos, dispatch] = React.useReducer(function (state, action) {
-    const { type, payload } = action;
-
-    switch (type) {
-      case "ADD_TODO":
-        return [...state, payload];
-      case "SET_DONE": {
-        const index = payload;
-
-        return [
-          ...state.slice(0, index),
-          {
-            ...state[index],
-            done: true
-          },
-          ...state.slice(index + 1)
-        ];
-      }
-      default:
-        return state;
-    }
-  }, []);
-
-  return (
-    <div className="block p-4">
-      <h1>ToDoWithReducer</h1>
-      <form className="flex flex-row items-end space-x-2 mb-4">
-        <label className="flex flex-col items-start">
-          Description
-          <input
-            type="text"
-            className="border px-4 py-2"
-            value={description}
-            onChange={function handler(e) {
-              const {
-                target: { value }
-              } = e;
-
-              setDescription(value);
-            }}
-          />
-        </label>
-        <button
-          type="button"
-          className="bg-blue-500 px-4 py-2 text-white"
-          onClick={function addTodo() {
-            dispatch({
-              type: "ADD_TODO",
-              payload: {
-                description
-              }
-            });
-            setDescription("");
-          }}
-        >
-          Add
-        </button>
-      </form>
-      <ul className="list-disc flex flex-col items-stretch">
-        {toDos.map((toDo, index) => {
-          return (
-            <li
-              key={index}
-              className={`flex items-center border-b py-2 ${
-                toDo.done && "line-through"
-              }`}
-            >
-              {toDo.description}
-              <button
-                type="button"
-                disabled={toDo.done}
-                className="bg-green-500 px-4 py-2 text-white ml-auto mr-0"
-                onClick={function addTodo() {
-                  dispatch({
-                    type: "SET_DONE",
-                    payload: index
-                  });
-                  setDescription("");
-                }}
-              >
-                Done
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
-}
-
 export default function App() {
   return (
     <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
+      <h1>How to use @cheesebit/use-slice</h1>
       <ToDoWithSlice />
-      <ToDoWithReducer />
     </div>
   );
 }
