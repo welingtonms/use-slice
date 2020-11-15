@@ -30,45 +30,212 @@ When you call `useSlice` we generate a wrapper around your reducers, generating 
 
 ## Usage guide
 
+Check a more complete example [here](https://codesandbox.io/embed/relaxed-fast-h4lv4?fontsize=14&hidenavigation=1&theme=dark).
+
 ```jsx
-import React from 'react';
-import useSlice from '@cheesebit/use-slice';
+import React from "react";
+import { useSlice } from "@cheesebit/use-slice";
 
-function ToDoList() {
- const { state, actions, dispatch } = useSlice('todo', [], {
-  addTodo(state, action) {
-    const { payload: newTodo } = action;
+import "./styles.css";
 
-    return [
-      ...state,
-      newTodo,
-    ];
-  },
-  setDone(state, action) {
-    const { payload: index } = action;
+function ToDoWithSlice() {
+  const [description, setDescription] = React.useState("");
+  const { state: toDos, actions, dispatch } = useSlice("todo", [], {
+    addTodo(state, action) {
+      const { payload } = action;
+      const [newTodo] = payload;
 
-    return [
-      ...state.slice(0, index),
-      {
-        ...state[index],
-        done: true
-      },
-      ...state.slice(index)
-    ]
-  }
- });
+      return [...state, newTodo];
+    },
+    setDone(state, action) {
+      const { payload } = action;
+      const [index] = payload;
 
- return (
-  <div>
-    <ul>
-      {
-        state.map(toDo => {
-          // ... TODO: Show toDo
-        }
+      return [
+        ...state.slice(0, index),
+        {
+          ...state[index],
+          done: true
+        },
+        ...state.slice(index + 1)
+      ];
+    }
+  });
+
+  return (
+    <div className="block p-4">
+      <h1>ToDoWithSlice</h1>
+      <form className="flex flex-row items-end space-x-2 mb-4">
+        <label className="flex flex-col items-start">
+          Description
+          <input
+            type="text"
+            className="border px-4 py-2"
+            value={description}
+            onChange={function handler(e) {
+              const {
+                target: { value }
+              } = e;
+
+              setDescription(value);
+            }}
+          />
+        </label>
+        <button
+          type="button"
+          className="bg-blue-500 px-4 py-2 text-white"
+          onClick={function addTodo() {
+            dispatch(
+              actions.addTodo({
+                description,
+                done: false
+              })
+            );
+
+            // You could also write:
+            // dispatch({
+            //   type: actions.addTodo.type,
+            //   payload: [{
+            //     description,
+            //     done: false
+            //   }]
+            // })
+
+            setDescription("");
+          }}
+        >
+          Add
+        </button>
+      </form>
+      <ul className="list-disc flex flex-col items-stretch">
+        {toDos.map((toDo, index) => {
+          return (
+            <li
+              key={index}
+              className={`flex items-center border-b py-2 ${
+                toDo.done && "line-through"
+              }`}
+            >
+              {toDo.description}
+              <button
+                type="button"
+                disabled={toDo.done}
+                className="bg-green-500 px-4 py-2 text-white ml-auto mr-0"
+                onClick={function addTodo() {
+                  dispatch(actions.setDone(index));
+                  setDescription("");
+                }}
+              >
+                Done
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
+function ToDoWithReducer() {
+  const [description, setDescription] = React.useState("");
+  const [toDos, dispatch] = React.useReducer(function (state, action) {
+    const { type, payload } = action;
+
+    switch (type) {
+      case "ADD_TODO":
+        return [...state, payload];
+      case "SET_DONE": {
+        const index = payload;
+
+        return [
+          ...state.slice(0, index),
+          {
+            ...state[index],
+            done: true
+          },
+          ...state.slice(index + 1)
+        ];
       }
-    <ul/>
-    // TODO: Add form
-  </div>
- );
+      default:
+        return state;
+    }
+  }, []);
+
+  return (
+    <div className="block p-4">
+      <h1>ToDoWithReducer</h1>
+      <form className="flex flex-row items-end space-x-2 mb-4">
+        <label className="flex flex-col items-start">
+          Description
+          <input
+            type="text"
+            className="border px-4 py-2"
+            value={description}
+            onChange={function handler(e) {
+              const {
+                target: { value }
+              } = e;
+
+              setDescription(value);
+            }}
+          />
+        </label>
+        <button
+          type="button"
+          className="bg-blue-500 px-4 py-2 text-white"
+          onClick={function addTodo() {
+            dispatch({
+              type: "ADD_TODO",
+              payload: {
+                description
+              }
+            });
+            setDescription("");
+          }}
+        >
+          Add
+        </button>
+      </form>
+      <ul className="list-disc flex flex-col items-stretch">
+        {toDos.map((toDo, index) => {
+          return (
+            <li
+              key={index}
+              className={`flex items-center border-b py-2 ${
+                toDo.done && "line-through"
+              }`}
+            >
+              {toDo.description}
+              <button
+                type="button"
+                disabled={toDo.done}
+                className="bg-green-500 px-4 py-2 text-white ml-auto mr-0"
+                onClick={function addTodo() {
+                  dispatch({
+                    type: "SET_DONE",
+                    payload: index
+                  });
+                  setDescription("");
+                }}
+              >
+                Done
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <div className="App">
+      <h1>Hello CodeSandbox</h1>
+      <h2>Start editing to see some magic happen!</h2>
+      <ToDoWithSlice />
+      <ToDoWithReducer />
+    </div>
+  );
 }
 ```
