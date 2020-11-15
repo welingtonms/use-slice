@@ -18,10 +18,8 @@ module.exports = [
         file: pkg.browser,
         format: 'umd',
       },
-      [
-        { name: 'use-slice', file: pkg.main, format: 'cjs' },
-        { name: 'use-slice', file: pkg.module, format: 'es' },
-      ],
+      { name: 'use-slice', file: pkg.main, format: 'cjs' },
+      { name: 'use-slice', file: pkg.module, format: 'es' },
     ],
     plugins: [
       del({ targets: [`dist/`] }),
