@@ -1,4 +1,4 @@
-# use-slice
+# @cheesebit/use-slice
 
 Provides a React hook similar to the Redux Toolkit [createSlice](https://redux-toolkit.js.org/usage/usage-with-typescript#createslice).
 
@@ -35,8 +35,6 @@ Check a more complete example [here](https://codesandbox.io/embed/relaxed-fast-h
 ```jsx
 import React from "react";
 import { useSlice } from "@cheesebit/use-slice";
-
-import "./styles.css";
 
 function ToDoWithSlice() {
   const [description, setDescription] = React.useState("");
