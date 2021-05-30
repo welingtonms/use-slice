@@ -47,17 +47,16 @@
     "@semantic-release/git": "9.0.0",
     "@testing-library/react-hooks": "7.0.0",
     "jest": "27.0.3",
-    "react-test-renderer": "17.0.2",
     "react": "17.0.2",
+    "react-test-renderer": "17.0.2",
+    "rollup": "2.50.4",
     "rollup-plugin-analyzer": "4.0.0",
     "rollup-plugin-delete": "2.0.0",
     "rollup-plugin-terser": "7.0.2",
-    "rollup": "2.50.4",
     "semantic-release": "17.4.3"
   },
   "peerDependencies": {
     "prop-types": "15.7.2",
     "react": "17.0.2"
-  },
-  "dependencies": {}
+  }
 }
