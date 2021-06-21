@@ -47,8 +47,8 @@ function useSlice(name, initialState, reducers) {
     return state;
   }
 
-  const actions = React.useRef(initializeActions());
   const reducersByActionType = React.useRef(initializeReducers());
+  const actions = React.useRef(initializeActions());
 
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
