@@ -10,21 +10,19 @@ module.exports = [
   {
     input: 'src/index.js',
     output: [
-      {
-        name: 'use-slice',
-        file: pkg.browser,
-        format: 'umd',
-      },
-      { name: 'use-slice', file: pkg.main, format: 'cjs' },
       { name: 'use-slice', file: pkg.module, format: 'es' },
     ],
     plugins: [
       del({ targets: [`dist/`] }),
+      resolve({
+        // Source: https://rollupjs.org/guide/en/#peer-dependencies
+        moduleDirectory: ['node_modules',],
+      }), // so Rollup can find `ms`
+      commonjs(), // so Rollup can convert `ms` to an ES module
       babel({
         exclude: 'node_modules/**', // only transpile our source code
       }),
       resolve(), // so Rollup can find `ms`
-      commonjs(), // so Rollup can convert `ms` to an ES module
       terser(),
       analyze({
         hideDeps: true,
