@@ -9,14 +9,12 @@ import resolve from '@rollup/plugin-node-resolve';
 module.exports = [
   {
     input: 'src/index.js',
-    output: [
-      { name: 'use-slice', file: pkg.module, format: 'es' },
-    ],
+    output: [{ name: 'use-slice', file: pkg.main, format: 'cjs' }],
     plugins: [
       del({ targets: [`dist/`] }),
       resolve({
         // Source: https://rollupjs.org/guide/en/#peer-dependencies
-        moduleDirectory: ['node_modules',],
+        moduleDirectory: ['node_modules'],
       }), // so Rollup can find `ms`
       commonjs(), // so Rollup can convert `ms` to an ES module
       babel({
@@ -27,7 +25,7 @@ module.exports = [
       analyze({
         hideDeps: true,
         summaryOnly: true,
-        filter: module => /^\/src/.test(module.id),
+        filter: (module) => /^\/src/.test(module.id),
       }),
     ],
     external: ['react'],
