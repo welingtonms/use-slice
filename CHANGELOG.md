@@ -1,3 +1,10 @@
+## [0.1.2](https://github.com/cheesebit/use-slice/compare/v0.1.1...v0.1.2) (2021-06-26)
+
+
+### Bug Fixes
+
+* fix bundle output ([d0df5c8](https://github.com/cheesebit/use-slice/commit/d0df5c8f471aff15edbca4939401d3cab27c7afd))
+
 ## [0.1.1](https://github.com/cheesebit/use-slice/compare/v0.1.0...v0.1.1) (2021-06-21)
 
 
