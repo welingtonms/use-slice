@@ -1,4 +1,4 @@
-# @cheesebit/use-slice
+# use-slice
 
 Provides a React hook similar to the Redux Toolkit [createSlice](https://redux-toolkit.js.org/usage/usage-with-typescript#createslice).
 
