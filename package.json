@@ -1,60 +1,65 @@
 {
-  "name": "@cheesebit/use-slice",
-  "version": "0.1.2",
-  "description": "Provides a React hook similar to the Redux Toolkit createSlice.",
-  "main": "dist/use-slice.js",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "test": "jest",
-    "start": "npm run watch",
-    "coverage": "jest --coverage",
-    "watch": "rollup -c --watch",
-    "build": "rollup -c",
-    "postversion": "git push origin --tags",
-    "prepublishOnly": "npm run build",
-    "release": "semantic-release"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cheesebit/use-slice.git"
-  },
-  "keywords": [
-    "slice",
-    "actions",
-    "reducer",
-    "state",
-    "hooks",
-    "react"
-  ],
-  "author": "Welington Silva",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/cheesebit/use-slice/issues"
-  },
-  "homepage": "https://github.com/cheesebit/use-slice#readme",
-  "devDependencies": {
-    "@babel/core": "7.14.6",
-    "@babel/preset-env": "7.14.7",
-    "@babel/preset-react": "7.14.5",
-    "@rollup/plugin-babel": "5.3.0",
-    "@rollup/plugin-commonjs": "19.0.0",
-    "@rollup/plugin-node-resolve": "13.0.0",
-    "@semantic-release/changelog": "5.0.1",
-    "@semantic-release/git": "9.0.0",
-    "@testing-library/react-hooks": "7.0.0",
-    "jest": "27.0.4",
-    "react": "17.0.2",
-    "react-test-renderer": "17.0.2",
-    "rollup": "2.52.2",
-    "rollup-plugin-analyzer": "4.0.0",
-    "rollup-plugin-delete": "2.0.0",
-    "rollup-plugin-terser": "7.0.2",
-    "semantic-release": "19.0.3"
-  },
-  "peerDependencies": {
-    "prop-types": ">= 15.7.2",
-    "react": ">= 17.0.1"
-  }
+	"name": "@welingtonms/use-slice",
+	"version": "0.1.2",
+	"description": "Provides a React hook similar to the Redux Toolkit createSlice.",
+	"main": "dist/use-slice.js",
+	"files": [
+		"dist"
+	],
+	"engines": {
+		"node": ">=16"
+	},
+	"scripts": {
+		"start": "yarn watch",
+		"test": "jest",
+		"coverage": "jest --coverage",
+		"watch": "rollup -c --watch",
+		"build": "rollup -c",
+		"generate-types": "tsc",
+		"release": "semantic-release"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/welingtonms/use-slice.git"
+	},
+	"keywords": [
+		"slice",
+		"actions",
+		"reducer",
+		"state",
+		"hooks",
+		"react"
+	],
+	"author": "Welington Silva",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/welingtonms/use-slice/issues"
+	},
+	"homepage": "https://github.com/welingtonms/use-slice#readme",
+	"devDependencies": {
+		"@babel/core": "7.18.5",
+		"@babel/preset-env": "7.18.2",
+		"@babel/preset-react": "7.17.12",
+		"@rollup/plugin-babel": "5.3.1",
+		"@rollup/plugin-node-resolve": "13.3.0",
+		"@semantic-release/changelog": "6.0.1",
+		"@semantic-release/git": "10.0.1",
+		"@testing-library/react-hooks": "8.0.1",
+		"jest": "28.1.1",
+		"prettier": "npm:wp-prettier@latest",
+		"react-test-renderer": "17.0.2",
+		"react": "17.0.2",
+		"rollup-plugin-analyzer": "4.0.0",
+		"rollup-plugin-delete": "2.0.0",
+		"rollup-plugin-terser": "7.0.2",
+		"rollup": "2.75.7",
+		"semantic-release": "19.0.3",
+		"rollup-plugin-peer-deps-external": "2.2.4"
+	},
+	"peerDependencies": {
+		"react": ">= 17.0.1"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
 }

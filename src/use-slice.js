@@ -6,57 +6,57 @@ import React from 'react';
  * @param {*} initialState - Initial value for this slice.
  * @param {*} reducers - Object containing reducer functions to act upon this slice.
  */
-function useSlice(name, initialState, reducers) {
-  function getTypeName(type) {
-    return `${name}/${type}`;
-  }
+function useSlice( name, initialState, reducers ) {
+	function getTypeName( type ) {
+		return `${ name }/${ type }`;
+	}
 
-  function initializeActions() {
-    let actions = {};
+	function initializeActions() {
+		let actions = {};
 
-    for (let type in reducers) {
-      actions[type] = function createAction(...args) {
-        return {
-          type: getTypeName(type),
-          payload: [...args],
-        };
-      };
-      actions[type].type = getTypeName(type);
-    }
+		for ( let type in reducers ) {
+			actions[ type ] = function createAction( ...args ) {
+				return {
+					type: getTypeName( type ),
+					payload: [ ...args ],
+				};
+			};
+			actions[ type ].type = getTypeName( type );
+		}
 
-    return actions;
-  }
+		return actions;
+	}
 
-  function initializeReducers() {
-    let reducersByActionType = {};
+	function initializeReducers() {
+		let reducersByActionType = {};
 
-    for (let type in reducers) {
-      reducersByActionType[getTypeName(type)] = reducers[type];
-    }
+		for ( let type in reducers ) {
+			reducersByActionType[ getTypeName( type ) ] = reducers[ type ];
+		}
 
-    return reducersByActionType;
-  }
+		return reducersByActionType;
+	}
 
-  function reducer(state, action) {
-    const reducerByActionType = reducersByActionType.current[action.type];
+	function reducer( state, action ) {
+		const reducerByActionType = reducersByActionType.current[ action.type ];
 
-    if (reducerByActionType != null) {
-      return reducerByActionType(state, action);
-    }
+		if ( reducerByActionType != null ) {
+			return reducerByActionType( state, action );
+		}
 
-    return state;
-  }
+		return state;
+	}
 
-  const reducersByActionType = React.useRef(initializeReducers());
-  const actions = React.useRef(initializeActions());
+	const reducersByActionType = React.useRef( initializeReducers() );
+	const actions = React.useRef( initializeActions() );
 
-  const [state, dispatch] = React.useReducer(reducer, initialState);
+	const [ state, dispatch ] = React.useReducer( reducer, initialState );
 
-  return {
-    actions: actions.current,
-    dispatch,
-    state,
-  };
+	return {
+		actions: actions.current,
+		dispatch,
+		state,
+	};
 }
 
 export default useSlice;

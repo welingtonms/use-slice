@@ -1,5 +1,8 @@
 # use-slice
 
+[![Coverage Status](https://img.shields.io/coveralls/github/welingtonms/use-slice?style=flat-square)](https://coveralls.io/github/welingtonms/use-slice)
+[![npm package](https://img.shields.io/npm/v/@welingtonms/use-slice?style=flat-square)](https://www.npmjs.com/package/@welingtonms/use-slice)
+
 Provides a React hook similar to the Redux Toolkit [createSlice](https://redux-toolkit.js.org/usage/usage-with-typescript#createslice).
 
 Whenever you intend to use React's `useReducer` hook, `useSlice` can be a big help; it wires the whole reducers/actions parts for you out of the box so you can focus on the business logic of your app.
@@ -8,7 +11,7 @@ The idea is that you are able to create your `reducers` and `actions` to be used
 
 ## Instalation
 
-You can add this hook as a dependency by running `npm install @cheesebit/use-slice` or `yarn add @cheesebit/use-slice`.
+You can add this hook as a dependency by running `npm install @welingtonms/use-slice` or `yarn add @welingtonms/use-slice`.
 
 ## Props
 
@@ -28,11 +31,11 @@ Finally, here you provide your reducers. Here we expect an object with your redu
 
 When you call `useSlice` we generate a wrapper around your reducers, generating actions types and using React's `useReducer` to produce your "slice" of state, and return the following:
 
-- **`state`** - This is state that's being handled in your slice.
+-   **`state`** - This is state that's being handled in your slice.
 
-- **`actions`** - This object holds you **dispatchable** actions ([!] do **NOT** forget to `dispatch` your action call), generated from the reducers you provided. That means, if your `reducers` object has a reducer `increment`, for instance, your `actions` object will have a function with the same name, so you can call it to perform the intended operation on your state.
+-   **`actions`** - This object holds your **dispatchable** actions ([!] do **NOT** forget to `dispatch` your action call), generated from the reducers you provided. That means, if your `reducers` object has a reducer `increment`, for instance, your `actions` object will have a function with the same name, so you can call it to perform the intended operation on your state.
 
-- **`dispatch`** - The dispatcher function.
+-   **`dispatch`** - The dispatcher function.
 
 ## Usage guide
 
@@ -40,110 +43,118 @@ Check a more complete example [here](https://codesandbox.io/embed/relaxed-fast-h
 
 ```jsx
 import React from 'react';
-import { useSlice } from '@cheesebit/use-slice';
+import { useSlice } from '@welingtonms/use-slice';
 
 function ToDoWithSlice() {
-  const [description, setDescription] = React.useState('');
-  const { state: toDos, actions, dispatch } = useSlice('todo', [], {
-    addTodo(state, action) {
-      const { payload } = action;
-      const [newTodo] = payload;
+	const [ description, setDescription ] = React.useState( '' );
+	const {
+		state: toDos,
+		actions,
+		dispatch,
+	} = useSlice( 'todo', [], {
+		addTodo( state, action ) {
+			const { payload } = action;
+			const [ newTodo ] = payload;
 
-      return [...state, newTodo];
-    },
-    setDone(state, action) {
-      const { payload } = action;
-      const [index] = payload;
+			return [ ...state, newTodo ];
+		},
+		setDone( state, action ) {
+			const { payload } = action;
+			const [ index ] = payload;
 
-      return [
-        ...state.slice(0, index),
-        {
-          ...state[index],
-          done: true,
-        },
-        ...state.slice(index + 1),
-      ];
-    },
-  });
+			return [
+				...state.slice( 0, index ),
+				{
+					...state[ index ],
+					done: true,
+				},
+				...state.slice( index + 1 ),
+			];
+		},
+	} );
 
-  return (
-    <div className="block p-4">
-      <h1>ToDoWithSlice</h1>
-      <form className="flex flex-row items-end space-x-2 mb-4">
-        <label className="flex flex-col items-start">
-          Description
-          <input
-            type="text"
-            className="border px-4 py-2"
-            value={description}
-            onChange={function handler(e) {
-              const {
-                target: { value },
-              } = e;
+	return (
+		<div className="block p-4">
+			<h1>ToDoWithSlice</h1>
+			<form className="flex flex-row items-end space-x-2 mb-4">
+				<label className="flex flex-col items-start">
+					Description
+					<input
+						type="text"
+						className="border px-4 py-2"
+						value={ description }
+						onChange={ function handler( e ) {
+							const {
+								target: { value },
+							} = e;
 
-              setDescription(value);
-            }}
-          />
-        </label>
-        <button
-          type="button"
-          className="bg-blue-500 px-4 py-2 text-white"
-          onClick={function addTodo() {
-            dispatch(
-              actions.addTodo({
-                description,
-                done: false,
-              })
-            );
+							setDescription( value );
+						} }
+					/>
+				</label>
+				<button
+					type="button"
+					className="bg-blue-500 px-4 py-2 text-white"
+					onClick={ function addTodo() {
+						dispatch(
+							actions.addTodo( {
+								description,
+								done: false,
+							} )
+						);
 
-            // You could also write:
-            // dispatch({
-            //   type: actions.addTodo.type,
-            //   payload: [{
-            //     description,
-            //     done: false
-            //   }]
-            // })
+						// We could also have written:
+						// dispatch({
+						//   type: actions.addTodo.type,
+						//   payload: [{
+						//     description,
+						//     done: false
+						//   }]
+						// })
 
-            setDescription('');
-          }}
-        >
-          Add
-        </button>
-      </form>
-      <ul className="list-disc flex flex-col items-stretch">
-        {toDos.map((toDo, index) => {
-          return (
-            <li
-              key={index}
-              className={`flex items-center border-b py-2 ${toDo.done && 'line-through'}`}
-            >
-              {toDo.description}
-              <button
-                type="button"
-                disabled={toDo.done}
-                className="bg-green-500 px-4 py-2 text-white ml-auto mr-0"
-                onClick={function addTodo() {
-                  dispatch(actions.setDone(index));
-                  setDescription('');
-                }}
-              >
-                Done
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
+						setDescription( '' );
+					} }
+				>
+					Add
+				</button>
+			</form>
+			<ul className="list-disc flex flex-col items-stretch">
+				{ toDos.map( ( toDo, index ) => {
+					return (
+						<li
+							key={ index }
+							className={ `flex items-center border-b py-2 ${
+								toDo.done && 'line-through'
+							}` }
+						>
+							{ toDo.description }
+							<button
+								type="button"
+								disabled={ toDo.done }
+								className="bg-green-500 px-4 py-2 text-white ml-auto mr-0"
+								onClick={ function addTodo() {
+									dispatch( actions.setDone( index ) );
+									setDescription( '' );
+								} }
+							>
+								Done
+							</button>
+						</li>
+					);
+				} ) }
+			</ul>
+		</div>
+	);
 }
 
 export default function App() {
-  return (
-    <div className="App">
-      <h1>How to use @cheesebit/use-slice</h1>
-      <ToDoWithSlice />
-    </div>
-  );
+	return (
+		<div className="App">
+			<h1>
+				How to use <i>@welingtonms/use-slice</i>
+			</h1>
+			<ToDoWithSlice />
+		</div>
+	);
 }
 ```
