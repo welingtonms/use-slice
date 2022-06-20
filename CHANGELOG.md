@@ -1,3 +1,10 @@
+## [0.1.3](https://github.com/welingtonms/use-slice/compare/v0.1.2...v0.1.3) (2022-06-20)
+
+
+### Bug Fixes
+
+* config improvements ([a7b9b6a](https://github.com/welingtonms/use-slice/commit/a7b9b6a295f77c2136bd04546dc3b8afb6aa7be9))
+
 ## [0.1.2](https://github.com/cheesebit/use-slice/compare/v0.1.1...v0.1.2) (2021-06-26)
 
 
